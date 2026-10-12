@@ -1,13 +1,13 @@
-package com.projects.ems;
+package com.projects.userservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EmsApplication {
+public class UserServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EmsApplication.class, args);
+		SpringApplication.run(UserServiceApplication.class, args);
 	}
 
 }

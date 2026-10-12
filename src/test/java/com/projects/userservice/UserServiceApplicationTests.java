@@ -1,10 +1,10 @@
-package com.projects.ems;
+package com.projects.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EmsApplicationTests {
+class UserServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
