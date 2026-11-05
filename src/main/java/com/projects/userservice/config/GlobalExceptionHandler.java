@@ -1,4 +1,4 @@
-package com.projects.userservice.exception;
+package com.projects.userservice.config;
 
 import java.util.NoSuchElementException;
 

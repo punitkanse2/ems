@@ -1,12 +1,10 @@
 package com.projects.userservice.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
 
-@Data
 public record UserRequestDto(
 		@NotBlank(message = "Name is mandatory")
 		String name,
@@ -16,5 +14,5 @@ public record UserRequestDto(
 		String email,
 		
 		String address,
-		LocalDateTime createdAt) {
+		Instant createdAt) {
 }

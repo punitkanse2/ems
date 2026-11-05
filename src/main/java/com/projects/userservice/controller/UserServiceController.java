@@ -47,9 +47,9 @@ public class UserServiceController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<String> addUser(@RequestBody @Valid UserRequestDto user) {
+	public ResponseEntity<UserResponseDto> addUser(@RequestBody @Valid UserRequestDto user) {
 		UserResponseDto savedUser = userService.addUser(user);
-		return ResponseEntity.ok("User created successfully with ID: " + savedUser.userId());
+		return ResponseEntity.ok(savedUser);
 	}
 	
 	@PutMapping("/users")

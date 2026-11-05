@@ -1,6 +1,6 @@
 package com.projects.userservice.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,13 +31,13 @@ public class User {
 
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
-	private LocalDateTime createdAt;
+	private Instant createdAt;
 
-	public LocalDateTime getCreatedAt() {
+	public Instant getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Instant createdAt) {
 		this.createdAt = createdAt;
 	}
 	

@@ -15,10 +15,13 @@ import com.projects.userservice.services.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	
-	private UserRepository repository;
+	private final UserRepository repository;
+	
+	UserServiceImpl(UserRepository repository) {
+		this.repository = repository;
+	}
 	
 	private final UserMapper userMapper = new UserMapper();
 	
