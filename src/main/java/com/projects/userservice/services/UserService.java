@@ -8,7 +8,7 @@ import com.projects.userservice.entity.User;
 
 public interface UserService {
 	
-	User getUserByID(long id);
+	UserResponseDto getUserByID(long id);
 	UserResponseDto addUser(UserRequestDto user);
 	Optional<User> updateUser(User user);
 	String deleteUser(Long id);

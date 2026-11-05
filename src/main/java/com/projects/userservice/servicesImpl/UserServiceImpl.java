@@ -18,19 +18,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
 	private UserRepository repository;
 	
 	private final UserMapper userMapper = new UserMapper();
 	
 	//CRUD Operation Services for UserId
-	public User getUserByID(long userId) {
-		return repository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found with id: " + userId));
+	public UserResponseDto getUserByID(long userId){
+		if (!repository.existsById(userId)) {
+			throw new NoSuchElementException("User not found with id: " + userId);
+		}
+		else {
+			User user = repository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found with id: " + userId));
+			return userMapper.userToUserResponseDto(user);
+		}
 	}
 	
 	@Override
 	public UserResponseDto addUser(UserRequestDto user){
-		
 		User userEntity = userMapper.userRequestDtotoUser(user);
 		return userMapper.userToUserResponseDto(repository.save(userEntity));
 	}
@@ -44,7 +48,7 @@ public class UserServiceImpl implements UserService {
 			updatedUser.setName(user.getName());
 			return Optional.of(repository.save(updatedUser));
 		} else {
-			throw new NoSuchElementException("User not found with id: " + user.getUserId());
+			throw new NoSuchElementException("User not found with given id");
 		}
 	}
 	
@@ -72,6 +76,5 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsers() {
 		return repository.findAll();
 	}
-	
 	
 }

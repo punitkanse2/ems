@@ -1,5 +1,9 @@
 package com.projects.userservice.entity;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,20 +18,34 @@ import lombok.*;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long userId;
+	private long userId;
 	
-	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "address", nullable = false)
+	@Column(name = "email", nullable = false, unique = true)
+	private String email;
+	
 	private String address;
 	
+	private boolean isActive;
+
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 	
-	public Long getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
@@ -39,6 +57,14 @@ public class User {
 		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -46,6 +72,12 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 }

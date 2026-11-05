@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,9 @@ import com.projects.userservice.dto.UserResponseDto;
 import com.projects.userservice.entity.User;
 import com.projects.userservice.services.UserService;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/userservice")
 public class UserServiceController {
@@ -25,72 +29,46 @@ public class UserServiceController {
 	@Autowired
 	private UserService userService;
 	
+	
+	/*
+	 * //Exception Handling for UserId
+	 * 
+	 * @ExceptionHandler(NoSuchElementException.class) public ResponseEntity<String>
+	 * handleNoSuchElementException(NoSuchElementException e) { return
+	 * ResponseEntity.status(404).body("User not found: " + e.getMessage()); }
+	 */
+	
+	
 	//CRUD Operations for UserId
 	@GetMapping("/users/{userId}")
-	public ResponseEntity<User> getUserById(@PathVariable long userId) {
-		try {
-			User user = userService.getUserByID(userId);
-			return ResponseEntity.ok(user);
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<UserResponseDto> getUserById(@PathVariable long userId) {
+		UserResponseDto user = userService.getUserByID(userId);
+		return ResponseEntity.ok(user);
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<String> addUser(@RequestBody UserRequestDto user) {
-		try{
-			UserResponseDto savedUser = userService.addUser(user);
-			if(savedUser.userId() != 0){
-				// Return a success message with the saved user ID
-				return ResponseEntity.ok("User added successfully with ID: " + savedUser.userId());
-			}
-			else{
-				throw new Exception("Something went wrong while adding the user.");
-			}
-		}
-		catch(Exception e){
-			return ResponseEntity.status(500).body("Error adding user: " + e.getMessage());
-		}
+	public ResponseEntity<String> addUser(@RequestBody @Valid UserRequestDto user) {
+		UserResponseDto savedUser = userService.addUser(user);
+		return ResponseEntity.ok("User created successfully with ID: " + savedUser.userId());
 	}
 	
 	@PutMapping("/users")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		try{
-			userService.updateUser(user);
-			return ResponseEntity.ok(user);
-		}
-		catch(Exception e){
-			return ResponseEntity.status(500).build();
-		}
+	public ResponseEntity <User> updateUser(@RequestBody @Valid User user) {
+		userService.updateUser(user);
+		return ResponseEntity.ok(user);
 	}
 	
 	@DeleteMapping("/users/{userId}")
 	public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-		try{
-			String act = userService.deleteUser(userId);
-			return ResponseEntity.ok(act);
-		}
-		catch(Exception e){
-			return ResponseEntity.status(500).body("Error deleting user: " + e.getMessage());
-		}
+		String act = userService.deleteUser(userId);
+		return ResponseEntity.ok(act);
 	}
 	
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUsers() {
-		try{
-			List<User> users = userService.getAllUsers();
-			return ResponseEntity.ok(users);
-		}
-		catch(Exception e){
-			return ResponseEntity.status(500).build();
-		}
+		List<User> users = userService.getAllUsers();
+		return ResponseEntity.ok(users);
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

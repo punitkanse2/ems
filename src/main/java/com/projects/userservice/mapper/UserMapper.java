@@ -14,12 +14,13 @@ public class UserMapper {
 		User user = new User();
 		
 		user.setName(dto.name());
+		user.setEmail(dto.email());
 		user.setAddress(dto.address());
 		return user;
 	}
 	public UserResponseDto userToUserResponseDto(User user) {
 		// TODO UserRequestDto to User Entity Conversion
-		return new UserResponseDto(user.getUserId(), user.getName(), user.getAddress());
+		return new UserResponseDto(user.getUserId(), user.getName(), user.getEmail(), user.getAddress(), user.isActive(), user.getCreatedAt());
 	}
 	
 	
